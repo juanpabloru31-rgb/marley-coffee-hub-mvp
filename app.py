@@ -8,7 +8,7 @@ PRODUCTS = {'Café en grano 1 kg': 18900, 'Café molido 500 g': 10900, 'Cápsula
 MACHINES = ['Máquina OCS - Oficina Central', 'Máquina OCS - Sala de reuniones']
 
 def init():
-    defaults = {'role':None,'page':'Inicio','cart':{},'orders':[{'id':'PED-001','fecha':'2026-09-12','detalle':'Café en grano 1 kg × 4','estado':'Entregado'}], 'tickets':[{'id':'OCS-001','equipo':MACHINES[0],'detalle':'Revisión preventiva (ejemplo)','estado':'Cerrado'}]}
+    defaults = {'role':None,'page':'Inicio','cart':{},'cart_version':0,'orders':[{'id':'PED-001','fecha':'2026-09-12','detalle':'Café en grano 1 kg × 4','estado':'Entregado'}], 'tickets':[{'id':'OCS-001','equipo':MACHINES[0],'detalle':'Revisión preventiva (ejemplo)','estado':'Cerrado'}]}
     for key,val in defaults.items():
         if key not in st.session_state: st.session_state[key]=val
 init()
@@ -57,19 +57,26 @@ if role=='HORECA':
     elif page=='Reposición':
         st.header('Reposición HORECA')
         st.write('Modifica cantidades y confirma un pedido de prueba. No se realizará ninguna compra real.')
-        with st.form('cart'):
+        with st.form('cart_form'):
             qty={}
             for product,price in PRODUCTS.items():
-                qty[product]=st.number_input(f'{product} · Precio ficticio ${price:,} CLP'.replace(',','.'),min_value=0,max_value=100,value=st.session_state.cart.get(product,2 if product=='Café en grano 1 kg' else 0),step=1)
+                qty[product]=st.number_input(f'{product} · Precio ficticio ${price:,} CLP'.replace(',','.'),min_value=0,max_value=100,value=st.session_state.cart.get(product,2 if product=='Café en grano 1 kg' else 0),step=1,key=f'qty_{st.session_state.cart_version}_{list(PRODUCTS).index(product)}')
             update=st.form_submit_button('Actualizar carrito')
-        if update: st.session_state.cart=qty
+        if update:
+            st.session_state.cart=qty.copy()
+            st.rerun()
         total=sum(PRODUCTS[p]*q for p,q in st.session_state.cart.items())
+        st.subheader('Resumen del carrito')
+        for p,q in st.session_state.cart.items():
+            if q:
+                st.write(f'{p}: {q} × ${PRODUCTS[p]:,.0f} = ${PRODUCTS[p]*q:,.0f}'.replace(',','.'))
         st.metric('Total ilustrativo (CLP)',f'${total:,.0f}'.replace(',','.'))
         if st.button('Confirmar pedido simulado',type='primary',disabled=total==0):
             details=', '.join(f'{p} × {q}' for p,q in st.session_state.cart.items() if q)
             order_id=f'PED-{len(st.session_state.orders)+1:03d}'
             st.session_state.orders.insert(0,{'id':order_id,'fecha':datetime.now().strftime('%Y-%m-%d'),'detalle':details,'estado':'Recibido (simulado)'})
             st.session_state.cart={}
+            st.session_state.cart_version+=1
             st.success(f'Pedido de prueba {order_id} registrado. Consulta el historial.')
     else:
         st.header('Historial de pedidos')
