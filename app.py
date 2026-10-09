@@ -127,11 +127,15 @@ if role=='HORECA':
         st.caption('Los importes se recalculan automáticamente al cambiar cualquier cantidad.')
         qty = {}
         for i, (product, price) in enumerate(PRODUCTS.items()):
+            # Título y precio visibles en móviles, independientemente del label del widget.
+            st.markdown(f'**{product}**')
+            st.caption(f'Precio unitario ilustrativo: ${price:,.0f} CLP'.replace(',', '.'))
             qty[product] = st.number_input(
-                f'{product} · Precio ficticio ${price:,.0f} CLP'.replace(',', '.'),
+                f'Cantidad de {product}',
                 min_value=0, max_value=100,
                 value=st.session_state.cart.get(product, 0),
                 step=1, key=f'auto_qty_{st.session_state.cart_version}_{i}',
+                label_visibility='collapsed',
             )
         # Los controles están fuera de st.form: cada cambio dispara un rerun.
         # Solo se lee su valor y se calcula el total, sin modificar sus claves.
