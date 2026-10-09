@@ -6,35 +6,38 @@ from pathlib import Path
 st.set_page_config(page_title='Marley Coffee | Hub B2B · Demo', page_icon='☕', layout='wide')
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
-:root {--espresso:#281b16;--cafe:#493126;--crema:#ffffff;--borde:#e2e5e9;--verde:#355a45;}
-html,body,[class*="css"], [data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
-.stApp {background:#F8F9FA;color:var(--espresso);}
-.block-container {max-width:1240px;padding-top:1.4rem;padding-bottom:3rem;}
-h1,h2,h3 {color:var(--espresso)!important;letter-spacing:-.025em;}
-h1 {font-family:'Playfair Display',Georgia,serif;font-weight:700!important;}
-[data-testid="stSidebar"] {background:linear-gradient(165deg,#30211b 0%,#1d1714 100%);border-right:1px solid #59463b;}
-[data-testid="stSidebar"] * {color:#f8f1e8!important;}
-[data-testid="stSidebar"] [role="radiogroup"] label {border-radius:10px;padding:.4rem .55rem;}
-[data-testid="stSidebar"] [role="radiogroup"] label:hover {background:#4b352a;}
-[data-testid="stSidebar"] button {border:1px solid #a38b78!important;background:#433127!important;color:#fff!important;}
-[data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"] > div,
-[data-testid="stForm"] {border-radius:16px!important;}
-[data-testid="stMetric"] {background:#ffffff;border:1px solid var(--borde);padding:17px 19px;box-shadow:0 5px 22px #35261b0a;}
-[data-testid="stMetricLabel"] {color:#6c6059;}
-[data-testid="stMetricValue"] {color:var(--espresso);font-weight:700;}
-div.stButton>button[kind="primary"],div.stFormSubmitButton>button[kind="primary"] {background:#493126!important;color:white!important;border:1px solid #493126!important;border-radius:11px!important;font-weight:700!important;min-height:43px;box-shadow:0 3px 10px #35251a18;}
-div.stButton>button[kind="primary"]:hover,div.stFormSubmitButton>button[kind="primary"]:hover {background:#2d1e17!important;border-color:#2d1e17!important;}
-div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {border-radius:11px!important;border-color:#d8c9bb!important;background:#ffffff!important;color:#38251d!important;}
-[data-baseweb="input"] > div,[data-baseweb="select"] > div,textarea {border-radius:10px!important;background:#ffffff!important;border-color:#d9cfc4!important;}
-[data-testid="stAlert"] {border-radius:12px!important;}
-hr {border-color:#e1e4e8!important;}
-.marley-hero {border-radius:19px;padding:30px 32px;margin:6px 0 23px;color:#fff;background:linear-gradient(100deg,rgba(25,17,14,.94) 0%,rgba(41,26,19,.84) 55%,rgba(41,26,19,.38) 100%),url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1800&q=85") center 52%/cover no-repeat;background-color:#281b16;box-shadow:0 14px 32px #2a1c1421;}
-.marley-hero .eyebrow {font-size:11px;letter-spacing:.24em;color:#e8d0ac;font-weight:700;}
-.marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(28px,4vw,42px);margin:8px 0;}
-.marley-hero p {color:#f1e8dc;font-size:15px;max-width:650px;margin-bottom:0;}
-.marley-rule {width:56px;height:3px;border-radius:4px;background:#d4ad75;margin:14px 0;}
-@media(max-width:650px){.marley-hero{padding:22px 20px}.block-container{padding-left:1rem;padding-right:1rem;}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+:root {--espresso:#211610;--coffee:#43291d;--sand:#f5f6f7;--line:#e2e5e8;--gold:#d8ac70;}
+html, body, [class*="css"], [data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
+.stApp {color:#211610;background:linear-gradient(180deg,rgba(248,249,250,.94),rgba(248,249,250,.98) 650px),url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1900&q=85') center top / cover fixed no-repeat!important;}
+.block-container {max-width:1320px;padding-top:1.1rem;padding-bottom:3.4rem;}
+h1,h2,h3 {color:#211610!important;letter-spacing:-.035em;font-weight:800!important;}
+h1 {font-family:'Playfair Display',Georgia,serif;}
+h2 {font-size:1.65rem!important;}
+[data-testid="stSidebar"] {background:linear-gradient(165deg,rgba(45,29,21,.97),rgba(20,14,11,.99)),url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=600&q=75') center/cover!important;border-right:1px solid #6e5140;}
+[data-testid="stSidebar"] * {color:#f8f2e9!important;}
+[data-testid="stSidebar"] [role="radiogroup"] label {padding:.54rem .7rem;border-radius:12px;transition:background .2s;}
+[data-testid="stSidebar"] [role="radiogroup"] label:hover {background:rgba(255,255,255,.12);}
+[data-testid="stSidebar"] button {background:#493124!important;border:1px solid #9e7960!important;color:#fff!important;}
+[data-testid="stMetric"] {background:rgba(255,255,255,.96)!important;border:1px solid #e5e1dd!important;border-radius:17px!important;padding:20px!important;box-shadow:0 8px 25px rgba(35,21,12,.06);}
+[data-testid="stMetricLabel"] {color:#776b64!important;}
+[data-testid="stMetricValue"] {color:#2d1c14!important;font-weight:800!important;}
+[data-testid="stVerticalBlockBorderWrapper"] > div,[data-testid="stForm"] {border-radius:17px!important;}
+[data-testid="stAlert"] {border-radius:13px!important;}
+[data-testid="stDataFrame"], [data-testid="stTable"] {background:#fff;border-radius:14px;overflow:hidden;}
+[data-baseweb="input"] > div,[data-baseweb="select"] > div,textarea {border-radius:11px!important;background:#fff!important;border-color:#d9d6d1!important;}
+div.stButton>button[kind="primary"],div.stFormSubmitButton>button[kind="primary"] {background:linear-gradient(110deg,#3f271b,#251710)!important;color:#fff!important;border:1px solid #3f271b!important;border-radius:12px!important;min-height:47px;font-weight:800!important;box-shadow:0 6px 17px #2d1b1428;}
+div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {background:#fff!important;border:1px solid #cbb9aa!important;color:#332117!important;border-radius:11px!important;}
+[data-testid="stNumberInput"] {background:rgba(255,255,255,.9);border:1px solid #e6e1dc;border-radius:12px;padding:8px 12px 12px;}
+[data-testid="stNumberInput"] button {background:#f0ebe6!important;}
+.marley-hero {position:relative;isolation:isolate;min-height:340px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-radius:24px;padding:48px 54px;margin:10px 0 30px;color:#fff!important;background:linear-gradient(93deg,rgba(19,12,9,.96) 0%,rgba(35,21,14,.87) 38%,rgba(43,26,17,.48) 72%,rgba(30,18,11,.22) 100%),url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2200&q=90') center 54%/cover no-repeat;box-shadow:0 18px 45px rgba(33,20,12,.22);}
+.marley-hero .eyebrow {font-size:12px;letter-spacing:.23em;color:#e8c99d!important;font-weight:800;}
+.marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(35px,4.5vw,62px)!important;line-height:1.09;max-width:780px;margin:15px 0 10px;font-weight:700!important;}
+.marley-hero p {font-size:clamp(14px,1.5vw,18px);color:#f7eee5!important;max-width:650px;line-height:1.6;margin:0;}
+.marley-rule {width:74px;height:3px;border-radius:5px;background:#d8ac70;margin:17px 0;}
+.marley-hero .hero-foot {margin-top:23px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#e6d5c5;}
+.marley-hero .hero-mark {position:absolute;right:34px;top:27px;border:1px solid #ffffff55;border-radius:50px;padding:8px 13px;font-size:12px;color:#fff;background:#0005;}
+@media(max-width:700px){.block-container{padding-left:1rem;padding-right:1rem;padding-top:.7rem}.marley-hero{min-height:315px;padding:30px 23px;border-radius:18px;background-position:61% center}.marley-hero h2{font-size:36px!important}.marley-hero .hero-mark{right:16px;top:13px;font-size:10px}.marley-hero .hero-foot{font-size:10px}.stApp{background:#f8f9fa!important}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -78,7 +81,7 @@ if LOGO_PATH.is_file():
         st.image(str(LOGO_PATH), width=155)
 
 st.caption('PROTOTIPO ACADÉMICO · DATOS FICTICIOS · SIN CONEXIÓN A MARLEY COFFEE NI DICALLA SPA')
-st.markdown("""<div class="marley-hero"><div class="eyebrow">MARLEY COFFEE · PORTAL B2B</div><h2>El café de tu negocio, bajo control.</h2><div class="marley-rule"></div><p>Autogestión de pedidos HORECA y soporte de equipos OCS, en una sola experiencia.</p></div>""", unsafe_allow_html=True)
+st.markdown("""<div class="marley-hero"><div class="hero-mark">☕ HUB B2B</div><div class="eyebrow">MARLEY COFFEE · PORTAL DE AUTOGESTIÓN</div><h2>El café de tu negocio,<br>bajo control.</h2><div class="marley-rule"></div><p>Reposición inteligente HORECA y gestión de equipos OCS en una experiencia digital integrada.</p><div class="hero-foot">PEDIDOS · EQUIPOS · SEGUIMIENTO</div></div>""", unsafe_allow_html=True)
 
 if st.session_state.role is None:
     st.subheader('Acceso de demostración')
