@@ -57,20 +57,27 @@ if role=='HORECA':
     elif page=='Reposición':
         st.header('Reposición HORECA')
         st.write('Modifica cantidades y confirma un pedido de prueba. No se realizará ninguna compra real.')
-        with st.form('cart_form'):
-            qty={}
-            for product,price in PRODUCTS.items():
-                qty[product]=st.number_input(f'{product} · Precio ficticio ${price:,} CLP'.replace(',','.'),min_value=0,max_value=100,value=st.session_state.cart.get(product,2 if product=='Café en grano 1 kg' else 0),step=1,key=f'qty_{st.session_state.cart_version}_{list(PRODUCTS).index(product)}')
-            update=st.form_submit_button('Actualizar carrito')
-        if update:
-            st.session_state.cart=qty.copy()
-            st.rerun()
-        total=sum(PRODUCTS[p]*q for p,q in st.session_state.cart.items())
+        st.caption('Los importes se recalculan automáticamente al cambiar cualquier cantidad.')
+        qty = {}
+        for i, (product, price) in enumerate(PRODUCTS.items()):
+            qty[product] = st.number_input(
+                f'{product} · Precio ficticio ${price:,.0f} CLP'.replace(',', '.'),
+                min_value=0, max_value=100,
+                value=st.session_state.cart.get(product, 0),
+                step=1, key=f'auto_qty_{st.session_state.cart_version}_{i}',
+            )
+        # Los controles están fuera de st.form: cada cambio dispara un rerun.
+        # Solo se lee su valor y se calcula el total, sin modificar sus claves.
+        st.session_state.cart = qty.copy()
+        total = sum(PRODUCTS[p] * q for p, q in qty.items())
         st.subheader('Resumen del carrito')
-        for p,q in st.session_state.cart.items():
+        for p, q in qty.items():
             if q:
-                st.write(f'{p}: {q} × ${PRODUCTS[p]:,.0f} = ${PRODUCTS[p]*q:,.0f}'.replace(',','.'))
-        st.metric('Total ilustrativo (CLP)',f'${total:,.0f}'.replace(',','.'))
+                subtotal = PRODUCTS[p] * q
+                st.write(f'{p}: {q} × ${PRODUCTS[p]:,.0f} = ${subtotal:,.0f}'.replace(',', '.'))
+        if not total:
+            st.info('Agrega productos con el botón + para ver el total.')
+        st.metric('Total ilustrativo (CLP)', f'${total:,.0f}'.replace(',', '.'))
         if st.button('Confirmar pedido simulado',type='primary',disabled=total==0):
             details=', '.join(f'{p} × {q}' for p,q in st.session_state.cart.items() if q)
             order_id=f'PED-{len(st.session_state.orders)+1:03d}'
