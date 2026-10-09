@@ -3,7 +3,40 @@ from datetime import datetime, timedelta
 import json
 
 st.set_page_config(page_title='Marley Coffee | Hub B2B · Demo', page_icon='☕', layout='wide')
-st.markdown('''<style>.stApp{background:#F5F3EF;color:#241C18}h1,h2,h3{color:#241C18}div.stButton>button[kind="primary"]{background:#3E2723;color:white;border:0} .stMetric{background:#fff;padding:12px;border-radius:12px}</style>''', unsafe_allow_html=True)
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+:root {--espresso:#281b16;--cafe:#493126;--crema:#faf8f4;--borde:#e8e1d8;--verde:#355a45;}
+html,body,[class*="css"], [data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
+.stApp {background:linear-gradient(180deg,#faf8f4 0%,#f4f0e9 100%);color:var(--espresso);}
+.block-container {max-width:1240px;padding-top:1.4rem;padding-bottom:3rem;}
+h1,h2,h3 {color:var(--espresso)!important;letter-spacing:-.025em;}
+h1 {font-family:'Playfair Display',Georgia,serif;font-weight:700!important;}
+[data-testid="stSidebar"] {background:linear-gradient(165deg,#30211b 0%,#1d1714 100%);border-right:1px solid #59463b;}
+[data-testid="stSidebar"] * {color:#f8f1e8!important;}
+[data-testid="stSidebar"] [role="radiogroup"] label {border-radius:10px;padding:.4rem .55rem;}
+[data-testid="stSidebar"] [role="radiogroup"] label:hover {background:#4b352a;}
+[data-testid="stSidebar"] button {border:1px solid #a38b78!important;background:#433127!important;color:#fff!important;}
+[data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"] > div,
+[data-testid="stForm"] {border-radius:16px!important;}
+[data-testid="stMetric"] {background:#fffdf9;border:1px solid var(--borde);padding:17px 19px;box-shadow:0 5px 22px #35261b0a;}
+[data-testid="stMetricLabel"] {color:#6c6059;}
+[data-testid="stMetricValue"] {color:var(--espresso);font-weight:700;}
+div.stButton>button[kind="primary"],div.stFormSubmitButton>button[kind="primary"] {background:#493126!important;color:white!important;border:1px solid #493126!important;border-radius:11px!important;font-weight:700!important;min-height:43px;box-shadow:0 3px 10px #35251a18;}
+div.stButton>button[kind="primary"]:hover,div.stFormSubmitButton>button[kind="primary"]:hover {background:#2d1e17!important;border-color:#2d1e17!important;}
+div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {border-radius:11px!important;border-color:#d8c9bb!important;background:#fffdf9!important;color:#38251d!important;}
+[data-baseweb="input"] > div,[data-baseweb="select"] > div,textarea {border-radius:10px!important;background:#fffefa!important;border-color:#d9cfc4!important;}
+[data-testid="stAlert"] {border-radius:12px!important;}
+hr {border-color:#e7ddd3!important;}
+.marley-hero {border-radius:19px;padding:30px 32px;margin:6px 0 23px;color:#fff;background:linear-gradient(100deg,rgba(31,20,14,.96),rgba(64,40,27,.88)),radial-gradient(circle at 80% 25%,#8e704a 0%,#38241c 50%,#211713 100%);box-shadow:0 14px 32px #2a1c1421;}
+.marley-hero .eyebrow {font-size:11px;letter-spacing:.24em;color:#e8d0ac;font-weight:700;}
+.marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(28px,4vw,42px);margin:8px 0;}
+.marley-hero p {color:#f1e8dc;font-size:15px;max-width:650px;margin-bottom:0;}
+.marley-rule {width:56px;height:3px;border-radius:4px;background:#d4ad75;margin:14px 0;}
+@media(max-width:650px){.marley-hero{padding:22px 20px}.block-container{padding-left:1rem;padding-right:1rem;}}
+</style>
+""", unsafe_allow_html=True)
+
 
 PRODUCTS = {'Café en grano 1 kg': 18900, 'Café molido 500 g': 10900, 'Cápsulas (caja)': 8900}
 MACHINES = [
@@ -37,8 +70,7 @@ def init():
 init()
 
 st.caption('PROTOTIPO ACADÉMICO · DATOS FICTICIOS · SIN CONEXIÓN A MARLEY COFFEE NI DICALLA SPA')
-st.title('☕ Marley Coffee | Hub de Autogestión B2B')
-st.write('Demostración funcional de portal web responsive para HORECA y OCS.')
+st.markdown("""<div class="marley-hero"><div class="eyebrow">MARLEY COFFEE · PORTAL B2B</div><h2>El café de tu negocio, bajo control.</h2><div class="marley-rule"></div><p>Autogestión de pedidos HORECA y soporte de equipos OCS, en una sola experiencia.</p></div>""", unsafe_allow_html=True)
 
 if st.session_state.role is None:
     st.subheader('Acceso de demostración')
