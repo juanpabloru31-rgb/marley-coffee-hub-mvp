@@ -1,14 +1,15 @@
 import streamlit as st
 from datetime import datetime, timedelta
 import json
+from pathlib import Path
 
 st.set_page_config(page_title='Marley Coffee | Hub B2B · Demo', page_icon='☕', layout='wide')
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
-:root {--espresso:#281b16;--cafe:#493126;--crema:#faf8f4;--borde:#e8e1d8;--verde:#355a45;}
+:root {--espresso:#281b16;--cafe:#493126;--crema:#ffffff;--borde:#e2e5e9;--verde:#355a45;}
 html,body,[class*="css"], [data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
-.stApp {background:linear-gradient(180deg,#faf8f4 0%,#f4f0e9 100%);color:var(--espresso);}
+.stApp {background:#F8F9FA;color:var(--espresso);}
 .block-container {max-width:1240px;padding-top:1.4rem;padding-bottom:3rem;}
 h1,h2,h3 {color:var(--espresso)!important;letter-spacing:-.025em;}
 h1 {font-family:'Playfair Display',Georgia,serif;font-weight:700!important;}
@@ -19,16 +20,16 @@ h1 {font-family:'Playfair Display',Georgia,serif;font-weight:700!important;}
 [data-testid="stSidebar"] button {border:1px solid #a38b78!important;background:#433127!important;color:#fff!important;}
 [data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"] > div,
 [data-testid="stForm"] {border-radius:16px!important;}
-[data-testid="stMetric"] {background:#fffdf9;border:1px solid var(--borde);padding:17px 19px;box-shadow:0 5px 22px #35261b0a;}
+[data-testid="stMetric"] {background:#ffffff;border:1px solid var(--borde);padding:17px 19px;box-shadow:0 5px 22px #35261b0a;}
 [data-testid="stMetricLabel"] {color:#6c6059;}
 [data-testid="stMetricValue"] {color:var(--espresso);font-weight:700;}
 div.stButton>button[kind="primary"],div.stFormSubmitButton>button[kind="primary"] {background:#493126!important;color:white!important;border:1px solid #493126!important;border-radius:11px!important;font-weight:700!important;min-height:43px;box-shadow:0 3px 10px #35251a18;}
 div.stButton>button[kind="primary"]:hover,div.stFormSubmitButton>button[kind="primary"]:hover {background:#2d1e17!important;border-color:#2d1e17!important;}
-div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {border-radius:11px!important;border-color:#d8c9bb!important;background:#fffdf9!important;color:#38251d!important;}
-[data-baseweb="input"] > div,[data-baseweb="select"] > div,textarea {border-radius:10px!important;background:#fffefa!important;border-color:#d9cfc4!important;}
+div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {border-radius:11px!important;border-color:#d8c9bb!important;background:#ffffff!important;color:#38251d!important;}
+[data-baseweb="input"] > div,[data-baseweb="select"] > div,textarea {border-radius:10px!important;background:#ffffff!important;border-color:#d9cfc4!important;}
 [data-testid="stAlert"] {border-radius:12px!important;}
-hr {border-color:#e7ddd3!important;}
-.marley-hero {border-radius:19px;padding:30px 32px;margin:6px 0 23px;color:#fff;background:linear-gradient(100deg,rgba(31,20,14,.96),rgba(64,40,27,.88)),radial-gradient(circle at 80% 25%,#8e704a 0%,#38241c 50%,#211713 100%);box-shadow:0 14px 32px #2a1c1421;}
+hr {border-color:#e1e4e8!important;}
+.marley-hero {border-radius:19px;padding:30px 32px;margin:6px 0 23px;color:#fff;background:linear-gradient(100deg,rgba(25,17,14,.94) 0%,rgba(41,26,19,.84) 55%,rgba(41,26,19,.38) 100%),url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1800&q=85") center 52%/cover no-repeat;background-color:#281b16;box-shadow:0 14px 32px #2a1c1421;}
 .marley-hero .eyebrow {font-size:11px;letter-spacing:.24em;color:#e8d0ac;font-weight:700;}
 .marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(28px,4vw,42px);margin:8px 0;}
 .marley-hero p {color:#f1e8dc;font-size:15px;max-width:650px;margin-bottom:0;}
@@ -69,6 +70,13 @@ def init():
         if key not in st.session_state: st.session_state[key]=val
 init()
 
+# Coloca el logo oficial en assets/logo_marley.png (opcional).
+LOGO_PATH = Path(__file__).parent / 'assets' / 'logo_marley.png'
+if LOGO_PATH.is_file():
+    col_logo, col_space = st.columns([1, 5])
+    with col_logo:
+        st.image(str(LOGO_PATH), width=155)
+
 st.caption('PROTOTIPO ACADÉMICO · DATOS FICTICIOS · SIN CONEXIÓN A MARLEY COFFEE NI DICALLA SPA')
 st.markdown("""<div class="marley-hero"><div class="eyebrow">MARLEY COFFEE · PORTAL B2B</div><h2>El café de tu negocio, bajo control.</h2><div class="marley-rule"></div><p>Autogestión de pedidos HORECA y soporte de equipos OCS, en una sola experiencia.</p></div>""", unsafe_allow_html=True)
 
@@ -87,6 +95,10 @@ if st.session_state.role is None:
     st.stop()
 
 with st.sidebar:
+    if LOGO_PATH.is_file():
+        st.image(str(LOGO_PATH), width=165)
+    else:
+        st.markdown('**MARLEY COFFEE**  ·  HUB B2B')
     st.subheader(st.session_state.company)
     st.caption('Perfil: '+st.session_state.role)
     menu = ['Inicio','Reposición','Confirmación','Historial'] if st.session_state.role=='HORECA' else ['Inicio','Mis equipos','Reportar falla','Seguimiento']
