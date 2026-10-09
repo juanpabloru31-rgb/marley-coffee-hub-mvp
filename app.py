@@ -35,9 +35,15 @@ div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {backgroun
 [data-testid="stNumberInput"] button svg path,[data-testid="stNumberInput"] button svg line {stroke:#111111!important;opacity:1!important;}
 [data-testid="stNumberInput"] input {color:#111111!important;background:#ffffff!important;-webkit-text-fill-color:#111111!important;}
 /* Texto de las opciones de despacho y retiro siempre visible */
-[data-testid="stRadio"] label,[data-testid="stRadio"] label p,[data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {color:#211610!important;opacity:1!important;visibility:visible!important;}
-[data-testid="stRadio"] [role="radiogroup"] label {min-height:40px;align-items:center;}
-@media(max-width:700px){[data-testid="stNumberInput"] button {min-width:40px!important;}[data-testid="stRadio"] [role="radiogroup"] label p {font-size:15px!important;line-height:1.4!important;white-space:normal!important;}}
+[data-testid="stMain"] [data-testid="stRadio"] label,[data-testid="stMain"] [data-testid="stRadio"] label p,[data-testid="stMain"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {color:#211610!important;opacity:1!important;visibility:visible!important;}
+[data-testid="stMain"] [data-testid="stRadio"] [role="radiogroup"] label {min-height:40px;align-items:center;}
+/* Menú lateral: contraste independiente de los radios del contenido */
+[data-testid="stSidebar"] [data-testid="stRadio"] label,
+[data-testid="stSidebar"] [data-testid="stRadio"] label p,
+[data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stWidgetLabel"] p {color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important;opacity:1!important;visibility:visible!important;}
+[data-testid="stSidebar"] [data-testid="stRadio"] [role="radiogroup"] label {min-height:40px;align-items:center;}
+@media(max-width:700px){[data-testid="stNumberInput"] button {min-width:40px!important;}[data-testid="stMain"] [data-testid="stRadio"] [role="radiogroup"] label p {font-size:15px!important;line-height:1.4!important;white-space:normal!important;}}
 .marley-hero {position:relative;isolation:isolate;min-height:340px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-radius:24px;padding:48px 54px;margin:10px 0 30px;color:#fff!important;background:linear-gradient(93deg,rgba(19,12,9,.96) 0%,rgba(35,21,14,.87) 38%,rgba(43,26,17,.48) 72%,rgba(30,18,11,.22) 100%),url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2200&q=90') center 54%/cover no-repeat;box-shadow:0 18px 45px rgba(33,20,12,.22);}
 .marley-hero .eyebrow {font-size:12px;letter-spacing:.23em;color:#e8c99d!important;font-weight:800;}
 .marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(35px,4.5vw,62px)!important;line-height:1.09;max-width:780px;margin:15px 0 10px;font-weight:700!important;}
@@ -331,3 +337,4 @@ else:
 
 st.divider()
 st.caption('Proyecto académico · Duoc UC · Marley Coffee / Dicalla SpA (caso de estudio). MVP de demostración, no servicio oficial.')
+
