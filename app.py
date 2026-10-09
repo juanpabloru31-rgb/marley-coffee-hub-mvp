@@ -29,7 +29,15 @@ h2 {font-size:1.65rem!important;}
 div.stButton>button[kind="primary"],div.stFormSubmitButton>button[kind="primary"] {background:linear-gradient(110deg,#3f271b,#251710)!important;color:#fff!important;border:1px solid #3f271b!important;border-radius:12px!important;min-height:47px;font-weight:800!important;box-shadow:0 6px 17px #2d1b1428;}
 div.stButton>button:not([kind="primary"]),div.stDownloadButton>button {background:#fff!important;border:1px solid #cbb9aa!important;color:#332117!important;border-radius:11px!important;}
 [data-testid="stNumberInput"] {background:rgba(255,255,255,.9);border:1px solid #e6e1dc;border-radius:12px;padding:8px 12px 12px;}
-[data-testid="stNumberInput"] button {background:#f0ebe6!important;}
+/* Controles de cantidad: contraste alto en escritorio y móvil */
+[data-testid="stNumberInput"] button {background:#f2f2f2!important;color:#111111!important;border:1px solid #b9b9b9!important;opacity:1!important;}
+[data-testid="stNumberInput"] button svg {color:#111111!important;fill:none!important;stroke:#111111!important;opacity:1!important;}
+[data-testid="stNumberInput"] button svg path,[data-testid="stNumberInput"] button svg line {stroke:#111111!important;opacity:1!important;}
+[data-testid="stNumberInput"] input {color:#111111!important;background:#ffffff!important;-webkit-text-fill-color:#111111!important;}
+/* Texto de las opciones de despacho y retiro siempre visible */
+[data-testid="stRadio"] label,[data-testid="stRadio"] label p,[data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {color:#211610!important;opacity:1!important;visibility:visible!important;}
+[data-testid="stRadio"] [role="radiogroup"] label {min-height:40px;align-items:center;}
+@media(max-width:700px){[data-testid="stNumberInput"] button {min-width:40px!important;}[data-testid="stRadio"] [role="radiogroup"] label p {font-size:15px!important;line-height:1.4!important;white-space:normal!important;}}
 .marley-hero {position:relative;isolation:isolate;min-height:340px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;border-radius:24px;padding:48px 54px;margin:10px 0 30px;color:#fff!important;background:linear-gradient(93deg,rgba(19,12,9,.96) 0%,rgba(35,21,14,.87) 38%,rgba(43,26,17,.48) 72%,rgba(30,18,11,.22) 100%),url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2200&q=90') center 54%/cover no-repeat;box-shadow:0 18px 45px rgba(33,20,12,.22);}
 .marley-hero .eyebrow {font-size:12px;letter-spacing:.23em;color:#e8c99d!important;font-weight:800;}
 .marley-hero h2 {font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:clamp(35px,4.5vw,62px)!important;line-height:1.09;max-width:780px;margin:15px 0 10px;font-weight:700!important;}
@@ -154,7 +162,9 @@ if role=='HORECA':
         st.metric('Total ilustrativo (CLP)', f'${total:,.0f}'.replace(',', '.'))
         st.divider()
         st.subheader('Entrega y condiciones del pedido')
-        delivery = st.radio('Modalidad de entrega', ['Despacho a domicilio (simulado)', 'Retiro en punto habilitado (simulado)'], key='checkout_delivery')
+        st.markdown('**Selecciona cómo quieres recibir tu pedido:**')
+        delivery = st.radio('Modalidad de entrega', ['Despacho a domicilio (simulado)', 'Retiro en punto habilitado (simulado)'], key='checkout_delivery', label_visibility='visible')
+        st.markdown(f'**Modalidad seleccionada:** {delivery}')
         st.caption('Los plazos son ejemplos académicos: no representan disponibilidad ni compromisos reales de Marley Coffee.')
         if delivery.startswith('Despacho'):
             st.info('Entrega estimada ficticia: 2 a 4 días hábiles desde la confirmación. El horario exacto requeriría coordinación logística real.')
